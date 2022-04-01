@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Point;
 import android.media.FaceDetector;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -51,6 +52,7 @@ public class EmojiFiMe {
                 Toast.makeText(context.getApplicationContext(), "Number of faces detected "+number, Toast.LENGTH_SHORT).show();
 
                 String emojiBitmap = null;
+                ImageView i = new ImageView(context);
 
                 //for setting emoji for multiple faces, we need a condition
                 if(number==0){
@@ -62,27 +64,35 @@ public class EmojiFiMe {
                         switch(getClassification(face)){
                             case SMILE:
                                 emojiBitmap = "Smile";
+                                i.setImageResource(R.drawable.smile);
                                 break;
                             case FROWN:
                                 emojiBitmap = "Sad";
+                                i.setImageResource(R.drawable.frown);
                                 break;
                             case RIGHT_WINK:
                                 emojiBitmap = "Right eye Wink";
+                                i.setImageResource(R.drawable.rightwink);
                                 break;
                             case LEFT_WINK:
                                 emojiBitmap = "Left eye wink";
+                                i.setImageResource(R.drawable.leftwink);
                                 break;
                             case LEFT_WINK_FROWN:
                                 emojiBitmap = "Left eye closes & sad";
+                                i.setImageResource(R.drawable.leftwinkfrown);
                                 break;
                             case RIGHT_WINK_FROWN:
                                 emojiBitmap = "Right eye closes & sad";
+                                i.setImageResource(R.drawable.rightwinkfrown);
                                 break;
                             case CLOSED_EYE_FROWN:
                                 emojiBitmap = "Eyes Closed & sad";
+                                i.setImageResource(R.drawable.closed_frown);
                                 break;
                             case CLOSED_EYE_SMILE:
                                 emojiBitmap = "Eyes Closed & smile";
+                                i.setImageResource(R.drawable.closed_smile);
                                 break;
                             default:
                                 Toast.makeText(context, R.string.no_emoji, Toast.LENGTH_SHORT).show();
@@ -91,6 +101,10 @@ public class EmojiFiMe {
                     }
                     resource[0] = emojiBitmap;
                     Toast.makeText(context, "Facial Expression: "+resource[0], Toast.LENGTH_SHORT).show();
+                    Toast toast = new Toast(context);
+                    toast.setDuration(Toast.LENGTH_LONG);
+                    toast.setView(i);
+                    toast.show();
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
